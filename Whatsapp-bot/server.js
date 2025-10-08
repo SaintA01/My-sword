@@ -1,4 +1,4 @@
-// server.js - FLY.IO VERSION
+
 import express from 'express';
 import { makeWASocket, useMultiFileAuthState, fetchLatestBaileysVersion } from '@whiskeysockets/baileys';
 import cors from 'cors';
@@ -8,18 +8,19 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Ensure sessions directory exists
+// AUTO-CREATE sessions folder if it doesn't exist
 if (!fs.existsSync('./sessions')) {
+  console.log('📁 Creating sessions folder...');
   fs.mkdirSync('./sessions', { recursive: true });
 }
 
+// ... rest of your server code remains the same
 let activeSocket = null;
 
 app.post('/api/start', async (req, res) => {
   console.log('🚀 Starting WhatsApp on Fly.io...');
   
   try {
-    // Close previous connection if exists
     if (activeSocket) {
       try {
         await activeSocket.logout();
@@ -61,7 +62,6 @@ app.post('/api/start', async (req, res) => {
       }
     });
 
-    // Timeout after 45 seconds
     setTimeout(() => {
       if (!qrSent) {
         res.status(408).json({ 
@@ -87,7 +87,6 @@ app.get('/health', (req, res) => {
   });
 });
 
-// Serve simple frontend
 app.get('/', (req, res) => {
   res.send(`
     <!DOCTYPE html>
@@ -95,11 +94,6 @@ app.get('/', (req, res) => {
     <head>
         <title>WhatsApp Bot - Fly.io</title>
         <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
-        <style>
-            body { font-family: Arial; padding: 40px; text-align: center; }
-            button { padding: 15px 30px; font-size: 18px; margin: 20px; }
-            #qr { margin: 20px auto; display: inline-block; background: white; padding: 20px; }
-        </style>
     </head>
     <body>
         <h1>🚀 WhatsApp Bot on Fly.io</h1>
