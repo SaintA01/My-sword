@@ -1,5 +1,5 @@
-app = "my-sword-bot"
-primary_region = "iad"
+app = "my-sword"
+primary_region = "ord"
 
 [build]
 
