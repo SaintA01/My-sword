@@ -1,9 +1,10 @@
 {
-  "name": "whatsapp-bot-railway",
+  "name": "whatsapp-bot-cyclic",
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "dev": "node server.js"
   },
   "dependencies": {
     "@whiskeysockets/baileys": "^6.4.0",
